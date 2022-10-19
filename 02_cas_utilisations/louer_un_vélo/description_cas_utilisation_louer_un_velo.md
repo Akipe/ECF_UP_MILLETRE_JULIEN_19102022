@@ -5,7 +5,7 @@ ECF_UP_MILLETRE_JULIEN_19102022
 
 ## Description
 
-Un ***Utilisateur*** peut payer une location de vélo grace à un compte bancaire connecté au ***Système Bancaire*** depuis une borne, qui lui permet de prendre le vélo et de le déposer ensuite à une autre borne.
+Un ***Utilisateur*** peut louer un vélo en réalisant une demande d'autorisation prélévement bancaire (à l'aide du ***Système Bancaire***) depuis une borne. Il pourra ensuite prendre le vélo et de le déposer à une autre borne une fois son trajet terminé.
 
 ## Acteurs
 
@@ -13,13 +13,13 @@ L'acteur principal pour ce cas d'utilisation est un ***Utilisateur***.
 
 Il y a un acteur secondaire, qui est le ***Système Bancaire***.
 
-Il peut également en fonction des scénarios exceptionnels avoir d'autres acteurs secondaires : le ***Service Client*** et le ***Service Technique***.
+Il peut également y avoir, en fonction des scénarios exceptionnels, d'autres acteurs secondaires : le ***Service Client*** et le ***Service Technique***.
 
 ## Pré-condition
 Un ***Utilisateur*** dispose d'une carte et la borne est prête à recevoir une carte.
 
 ## Post-condition
-L'***Utilisateur*** à rendu le vélo loué et il a payé la location.
+L'***Utilisateur*** à rendu le vélo et il a payé la location.
 
 ## Scénarios
 
@@ -32,17 +32,17 @@ L'***Utilisateur*** à rendu le vélo loué et il a payé la location.
 5. Le Système demande à l'Utilisateur de rentrer son code de carte bancaire.
 6. L'Utilisateur rentre son code de carte bancaire.
 7. Le Système valide le code de la carte bancaire.
-8. Le Système contacte Système Bancaire pour demande un pré-payement.
+8. Le Système contacte Système Bancaire pour réaliser une demande initial de prélévement.
 9. Le Système Bancaire valide l'opération.
-10. Le Système débloque la borne et enregistre la date et l'heure du débloccage.
+10. Le Système débloque la borne et enregistre la date et l'heure de ce déblocage.
 11. Le Système enregistre le carte bancaire comme "en cours de location".
 12. L'Utilisateur prend le vélo.
 13. L'Utilisateur dépose le vélo à une borne.
 14. Le Système détecte qu'un vélo est dans la borne.
 15. Le Système bloque le vélo et enregistre la date et l'heure du blocage.
-16. Le Système n'enregistre plus la carte bancaire en tant qu'"en cours de location".
-17. Le Système calcul la somme d'argent à récupérer en fonction du temps d'utilisation du vélo.
-18. Le Système contacte Système Bancaire pour valider le pré-payement avec le somme d'argent calculé.
+16. Le Système retire carte bancaire des enregistrements "en cours de location".
+17. Le Système calcul le prix total de la location en fonction du temps d'utilisation du vélo.
+18. Le Système contacte Système Bancaire pour valider le prélévement avec le prix de la location.
 19. Le Système Bancaire valide l'opération.
 
 ### Scénarios alternatifs
@@ -76,7 +76,7 @@ Reprise du scénario nominal à l'étape 18.
 Remplacement de l'étape 15 :
 
 1. Le Système n'arrive pas à bloquer le vélo.
-2. Le Système informe l'utilisateur qu'il doit retirer et remettre le vélo.
+2. Le Système informe l'utilisateur qu'il doit reessayer de remettre le vélo.
 
 Reprise du scénario nominal à l'étape 13.
 
@@ -85,13 +85,13 @@ Reprise du scénario nominal à l'étape 13.
 #### E1 - Il n'y a pas de vélo
 Remplacement de l'étape 2 :
 
-1. Le Système ne trouve pas de vélo à cette borne.
+1. Le Système n'a pas de vélo bloqué à cette borne.
 2. Le Systeme informe à l'utilisateur qu'il n'y a pas de vélo.
 
 #### E2 - L'opération bancaire a été refusé
 Remplacement de l'étape 9 :
 
-1. Le Système Bancaire ne valide pas l'opération de pré-prélévement.
+1. Le Système Bancaire ne valide pas l'opération de prélévement initial.
 2. Le Système informe que l'opération bancaire à échoué.
 
 #### E3 - La borne n'arrive pas à débloquer le vélo
@@ -108,7 +108,7 @@ Remplacement de l'étape 12 :
 1. L'Utilisateur ne prend pas le vélo après 10 secondes.
 2. Le Système bloque le vélo.
 3. Le Système annule l'opération bancaire.
-4. Le Système n'enregistre plus la carte bancaire en tant que location en cours. 
+4. Le Système retire la carte bancaire des enregistrement de carte "location en cours". 
 
 #### E5 - Le vélo n'est pas déposé en borne après 24 heures.
 Remplacement de l'étape 13 :
