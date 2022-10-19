@@ -16,10 +16,10 @@ Il y a un acteur secondaire, qui est le ***Système Bancaire***.
 Il peut également en fonction des scénarios exceptionnels avoir d'autres acteurs secondaires : le ***Service Client*** et le ***Service Technique***.
 
 ## Pré-condition
-Un ***Utilisateur*** dispose d'une carte.
+Un ***Utilisateur*** dispose d'une carte et la borne est prête à recevoir une carte.
 
 ## Post-condition
-L'***Utilisateur*** à rendu le vélo loué et n'a pas à régler financierement la location. 
+L'***Utilisateur*** à rendu le vélo loué et il a payé la location.
 
 ## Scénarios
 
@@ -34,12 +34,12 @@ L'***Utilisateur*** à rendu le vélo loué et n'a pas à régler financierement
 1. Le Système valide le code de la carte bancaire.
 1. Le Système contacte Système Bancaire pour demande un pré-payement.
 1. Le Système Bancaire valide l'opération.
-1. Le Système débloque la borne.
+1. Le Système débloque la borne et enregistre la date et l'heure du débloccage.
 1. Le Système enregistre le carte bancaire comme "en cours de location".
 1. L'Utilisateur prend le vélo.
 1. L'Utilisateur dépose le vélo à une borne.
 1. Le Système détecte qu'un vélo est dans la borne.
-1. Le Système bloque le vélo.
+1. Le Système bloque le vélo et enregistre la date et l'heure du blocage.
 1. Le Système n'enregistre plus la carte bancaire en tant qu'"en cours de location".
 1. Le Système calcul la somme d'argent à récupérer en fonction du temps d'utilisation du vélo.
 1. Le Système contacte Système Bancaire pour valider le pré-payement avec le somme d'argent calculé.
@@ -142,3 +142,9 @@ Remplace l'étape 4 :
 
 1. Le Système detecte que la carte bancaire n'est pas autorisé car le réglement de la dernière location n'a pu être réaliser.
 1. Le Système informe l'Utilisateur qu'il ne pourra pas louer de vélo tant qu'il n'aura pas régler la dernière location, et qu'il doit contacter le Service Client.
+
+#### E10 - Impossible de contacter le Système Bancaire
+Remplace l'épte 9 :
+
+1. Le Système Bancaire ne répond pas.
+1. Le Système annule l'opération.
