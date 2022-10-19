@@ -35,9 +35,12 @@ L'***Utilisateur*** à rendu le vélo loué et n'a pas à régler financierement
 1. Le Système contacte Système Bancaire pour demande un pré-payement.
 1. Le Système Bancaire valide l'opération.
 1. Le Système débloque la borne.
+1. Le Système enregistre le carte bancaire comme "en cours de location".
 1. L'Utilisateur prend le vélo.
 1. L'Utilisateur dépose le vélo à une borne.
+1. Le Système détecte qu'un vélo est dans la borne.
 1. Le Système bloque le vélo.
+1. Le Système n'enregistre plus la carte bancaire en tant qu'"en cours de location".
 1. Le Système calcul la somme d'argent à récupérer en fonction du temps d'utilisation du vélo.
 1. Le Système contacte Système Bancaire pour valider le pré-payement avec le somme d'argent calculé.
 1. Le Système Bancaire valide l'opération.
@@ -62,12 +65,20 @@ Remplacement de l'étape 6 :
 Reprise du scénario nominal à l'étape 5.
 
 #### A3 - Le prélévement bancaire échoue
-Remplacement de l'étape 16 :
+Remplacement de l'étape 19 :
 
 1. Le Système Bancaire ne répond pas.
 1. Le Système attend une heure.
 
-Reprise du scénario nominal à l'étape 15.
+Reprise du scénario nominal à l'étape 18.
+
+#### A4 - Impossible de bloquer du vélo
+Remplacement de l'étape 15 :
+
+1. Le Système n'arrive pas à bloquer le vélo.
+1. Le Système informe l'utilisateur qu'il doit retirer et remettre le vélo.
+
+Reprise du scénario nominal à l'étape 13.
 
 ### Scénarios exceptionnels
 
@@ -92,23 +103,26 @@ Remplacement de l'étape 10 :
 1. Le Système envoie une notification d'intervention au Service Technique. 
 
 #### E4 - Le vélo est laissé à la borne débloqué après 10 secondes
-Remplacement de l'étape 11 :
+Remplacement de l'étape 12 :
 
 1. L'Utilisateur ne prend pas le vélo après 10 secondes.
 1. Le Système bloque le vélo.
 1. Le Système annule l'opération bancaire.
+1. Le Système n'enregistre plus la carte bancaire en tant que location en cours. 
 
 #### E5 - Le vélo n'est pas déposé en borne après 24 heures.
-Remplacement de l'étape 12 :
+Remplacement de l'étape 13 :
 
 1. L'Utilisateur ne rend pas le vélo après 24 heures de location.
 1. Le Système informe le Service Client d'un vélo manquant avec les informations bancaires de l'Utilisateur.
+1. Le Système enregistre le numéro de carte bancaire en tant que location non réglé.
 
 #### E6 - Le prélévement bancaire à échoué de trop nombre fois.
 A partir de 3 fois pour le scénario alternatif A3 (étape A3.1) :
 
 1. Enregistrement de la carte bancaire comme Utilisateur n'ayant pas régler la location.
 1. Le Système notifie le Service Client que l'Utilisateur n'a pas réglé sa location
+1. Le Système enregistre le numéro de carte bancaire en tant que location non réglé.
 
 
 #### E7 - Annulation
@@ -120,9 +134,11 @@ De l'étape 4 à l'étape 7 :
 #### E8 - Location déjà en cours 
 Remplace l'étape 4 :
 
+1. Le Système detecte que la carte bancaire n'est pas autorisé car il y a déjà une location en cours.
 1. Le Système informe l'Utilisateur qu'une location est déjà en cours.
 
 #### E9 - Location non autorisé car non payement de l'ancienne location
 Remplace l'étape 4 :
 
+1. Le Système detecte que la carte bancaire n'est pas autorisé car le réglement de la dernière location n'a pu être réaliser.
 1. Le Système informe l'Utilisateur qu'il ne pourra pas louer de vélo tant qu'il n'aura pas régler la dernière location, et qu'il doit contacter le Service Client.
