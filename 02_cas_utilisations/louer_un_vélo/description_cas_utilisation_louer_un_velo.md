@@ -144,7 +144,7 @@ Remplace l'étape 4 :
 2. Le Système informe l'Utilisateur qu'il ne pourra pas louer de vélo tant qu'il n'aura pas régler la dernière location, et qu'il doit contacter le Service Client.
 
 #### E10 - Impossible de contacter le Système Bancaire
-Remplace l'épte 9 :
+Remplace l'étape 9 :
 
 1. Le Système Bancaire ne répond pas.
 2. Le Système annule l'opération.
